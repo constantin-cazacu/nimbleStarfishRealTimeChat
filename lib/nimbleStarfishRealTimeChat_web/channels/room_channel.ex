@@ -21,6 +21,8 @@ defmodule NimbleStarfishRealTimeChatWeb.RoomChannel do
   # broadcast to everyone in the current topic (room:lobby).
   @impl true
   def handle_in("shout", payload, socket) do
+    NimbleStarfishRealTimeChat.Message.changeset(%NimbleStarfishRealTimeChat.Message{}, payload)
+    |> NimbleStarfishRealTimeChat.Repo.insert
     broadcast(socket, "shout", payload)
     {:noreply, socket}
   end
