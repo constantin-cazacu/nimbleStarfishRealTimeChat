@@ -1,6 +1,7 @@
 defmodule NimbleStarfishRealTimeChat.Message do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   schema "messages" do
     field :message, :string
@@ -14,5 +15,12 @@ defmodule NimbleStarfishRealTimeChat.Message do
     message
     |> cast(attrs, [:name, :message])
     |> validate_required([:name, :message])
+  end
+
+  def get_messages(limit \\ 20) do
+    NimbleStarfishRealTimeChat.Message
+    |> limit(^limit)
+    |> order_by(desc: :inserted_at)
+    |> NimbleStarfishRealTimeChat.Repo.all()
   end
 end
