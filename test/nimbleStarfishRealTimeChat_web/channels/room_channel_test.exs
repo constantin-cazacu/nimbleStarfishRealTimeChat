@@ -24,4 +24,17 @@ defmodule NimbleStarfishRealTimeChatWeb.RoomChannelTest do
     broadcast_from!(socket, "broadcast", %{"some" => "data"})
     assert_push "broadcast", %{"some" => "data"}
   end
+
+  test ":after_join sends all existing messages", %{socket: socket} do
+    # insert a new message to send in the :after_join
+    payload = %{name: "Robert", message: "test"}
+    NimbleStarfishRealTimeChat.Message.changeset(%NimbleStarfishRealTimeChat.Message{}, payload)
+    |> NimbleStarfishRealTimeChat.Repo.insert()
+
+    {:ok, _, socket2} = NimbleStarfishRealTimeChatWeb.UserSocket
+      |> socket("person_id", %{some: :assign})
+      |> subscribe_and_join(NimbleStarfishRealTimeChatWeb.RoomChannel, "room:lobby")
+
+    assert socket2.join_ref != socket.join_ref
+  end
 end
