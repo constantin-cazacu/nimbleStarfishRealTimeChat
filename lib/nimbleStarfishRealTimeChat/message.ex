@@ -17,6 +17,8 @@ defmodule NimbleStarfishRealTimeChat.Message do
     |> validate_required([:name, :message])
   end
 
+  # Accepts  single parameter 'limit' t nly return a fixed/maximum
+  # number of records, fetching all records from the database.
   def get_messages(limit \\ 20) do
     NimbleStarfishRealTimeChat.Message
     |> limit(^limit)
