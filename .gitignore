@@ -41,3 +41,6 @@ npm-debug.log
 *.ipr
 *.iws
 .idea_modules/
+
+# ENV
+.env
