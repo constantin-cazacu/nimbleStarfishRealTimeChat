@@ -3,6 +3,6 @@ defmodule NimbleStarfishRealTimeChatWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")
-    assert html_response(conn, 200) =~ "Phoenix Chat Example"
+    assert html_response(conn, 200) =~ "Chat App"
   end
 end
